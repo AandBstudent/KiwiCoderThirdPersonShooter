@@ -28,7 +28,7 @@ public class CharacterAiming : MonoBehaviour
 
         if(Input.GetButton("Fire2"))
         {
-            Debug.Log("Pew Pew");
+            Debug.Log("Aiming");
             aimLayer.weight += Time.deltaTime / aimDuration;
         }
         else
@@ -43,9 +43,18 @@ public class CharacterAiming : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             weapon.StartFiring();
-        }else if (Input.GetButtonUp("Fire1"))
+        }
+
+        weapon.UpdateBullets(Time.deltaTime);
+
+        if (Input.GetButtonUp("Fire1"))
         {
             weapon.StopFiring();
+        }
+
+        if(weapon.isFiring)
+        {
+            weapon.UpdateFiring(Time.deltaTime);
         }
 
 
