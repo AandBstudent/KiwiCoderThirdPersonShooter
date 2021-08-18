@@ -8,7 +8,7 @@ public class CharacterAiming : MonoBehaviour
     public float turnSpeed = 15f;
     public float aimDuration = 1f;
     Camera mainCamera;
-    RayCastWeapon weapon;
+    
     public Rig aimLayer;
 
     // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class CharacterAiming : MonoBehaviour
         mainCamera = Camera.main;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        weapon = GetComponentInChildren<RayCastWeapon>();
+        
     }
 
     // Update is called once per frame
@@ -26,37 +26,22 @@ public class CharacterAiming : MonoBehaviour
         float yawCamera = mainCamera.transform.rotation.eulerAngles.y;
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, yawCamera, 0), turnSpeed * Time.fixedDeltaTime);
 
-        if(Input.GetButton("Fire2"))
+        if(aimLayer)
         {
-            Debug.Log("Aiming");
-            aimLayer.weight += Time.deltaTime / aimDuration;
+            //if (Input.GetButton("Fire2"))
+            //{
+            //    Debug.Log("Aiming");
+            //    aimLayer.weight += Time.deltaTime / aimDuration;
+            //}
+            //else
+            //{
+            //    if (aimLayer.weight >= 0)
+            //    {
+            //        aimLayer.weight -= Time.deltaTime / aimDuration;
+            //    }
+
+            //}
+            aimLayer.weight = 1.0f;
         }
-        else
-        {
-            if(aimLayer.weight >= 0)
-            {
-                aimLayer.weight -= Time.deltaTime / aimDuration;
-            }
-            
-        }
-
-        if (Input.GetButtonDown("Fire1"))
-        {
-            weapon.StartFiring();
-        }
-
-        weapon.UpdateBullets(Time.deltaTime);
-
-        if (Input.GetButtonUp("Fire1"))
-        {
-            weapon.StopFiring();
-        }
-
-        if(weapon.isFiring)
-        {
-            weapon.UpdateFiring(Time.deltaTime);
-        }
-
-
     }
 }
