@@ -5,10 +5,14 @@ using UnityEngine;
 public class ActiveWeapon : MonoBehaviour
 {
     public Transform crossHairTarget;
-    public UnityEngine.Animations.Rigging.Rig handIK;
+    //public UnityEngine.Animations.Rigging.Rig handIK;
     public Transform weaponParent;
-    RayCastWeapon weapon;
+    public Transform weaponLeftGrip;
+    public Transform weaponRightGrip;
+    public Animator rigController;
 
+    RayCastWeapon weapon;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -41,11 +45,6 @@ public class ActiveWeapon : MonoBehaviour
             {
                 weapon.UpdateFiring(Time.deltaTime);
             }
-
-        }
-        else
-        {
-            handIK.weight = 0;
         }
     }
 
@@ -60,7 +59,7 @@ public class ActiveWeapon : MonoBehaviour
         weapon.transform.parent = weaponParent;
         weapon.transform.localPosition = Vector3.zero;
         weapon.transform.localRotation = Quaternion.identity;
-
-        handIK.weight = 1.0f;
+        rigController.Play("equip_" + weapon.weaponName);
+        //handIK.weight = 1.0f;
     }
 }
